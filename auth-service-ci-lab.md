@@ -207,36 +207,13 @@ git checkout -b develop
 git push -u origin develop
 ```
 
-### Step 4.2 — Push a feature branch and watch the PR check run
-
-```bash
-git checkout -b feat-first-build
-
-# Make a small change to trigger CI
-echo "" >> auth-service/pom.xml
-
-git add auth-service/pom.xml
-git commit -m "test: trigger PR check"
-git push -u origin feat-first-build
-```
-
-Go to your `zen-pharma-backend-lab1` fork → **Actions** tab.
-
-You will see **PR Check — auth-service** start. It runs:
-1. Starts a PostgreSQL 15 container for integration tests
-2. `mvn verify` — unit tests + integration tests + JaCoCo coverage
-3. CodeQL security analysis
-4. Semgrep SAST scan (java + OWASP Top 10 rules)
-
-This takes ~5–8 minutes. No Docker image is built, no AWS credentials used.
-
-Wait for the green checkmark ✓ before continuing.
-
-### Step 4.3 — Merge to develop and watch the full CI
+### Step 4.2 — Push to develop and watch the full CI
 
 ```bash
 git checkout develop
-git merge feat-first-build
+echo "" >> auth-service/pom.xml
+git add auth-service/pom.xml
+git commit -m "test: trigger full CI"
 git push origin develop
 ```
 
